@@ -87,6 +87,7 @@ shared static this()
 	router.get("*", serveStaticFiles(uploadsDir));
 
 	auto settings = new HTTPServerSettings;
+	settings.maxRequestSize = ulong.max;
 	settings.port = 9021;
 	settings.bindAddresses = ["0.0.0.0"];
 	listenHTTP(settings, router);
