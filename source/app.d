@@ -15,7 +15,7 @@ import std.conv : to;
 import std.digest.sha;
 import std.range;
 
-enum baseUrl = "https://127.0.0.1";
+enum baseUrl = "http://127.0.0.1";
 enum uploadsDir = "./uploads";
 
 MongoDatabase db;
