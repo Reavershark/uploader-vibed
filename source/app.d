@@ -3,6 +3,7 @@ import vibe.core.file;
 import vibe.core.log;
 import vibe.core.path;
 import vibe.db.mongo.mongo;
+import vibe.http.fileserver;
 import vibe.http.router;
 import vibe.http.server;
 
@@ -14,6 +15,7 @@ import std.conv : to;
 import std.digest.sha;
 import std.range;
 
+enum baseUrl = "https://127.0.0.1";
 enum uploadsDir = "./uploads";
 
 MongoDatabase db;
@@ -48,7 +50,7 @@ void uploadFile(scope HTTPServerRequest req, scope HTTPServerResponse res)
 	
 	// Generate unique id
 	immutable string newDirName = randomHash();
-
+	immutable string urlPath = newDirName ~ "/" ~ to!string(pf.filename);
 	immutable NativePath newDirPath = NativePath(uploadsDir) ~ newDirName;
 	immutable NativePath newPath =  newDirPath ~ pf.filename;
 
@@ -66,7 +68,7 @@ void uploadFile(scope HTTPServerRequest req, scope HTTPServerResponse res)
 
 	uploadsColl.insert(["name": to!string(pf.filename), "directory": newDirName]);
 
-	res.writeBody("File uploaded!", "text/plain");
+	res.writeBody("{\"url\": \"" ~ baseUrl ~ "/" ~ urlPath ~ "\"}", "text/json");
 }
 
 shared static this()
@@ -82,9 +84,10 @@ shared static this()
 	auto router = new URLRouter;
 	router.get("/", staticTemplate!"upload_form.dt");
 	router.post("/upload", &uploadFile);
+	router.get("*", serveStaticFiles(uploadsDir));
 
 	auto settings = new HTTPServerSettings;
-	settings.port = 8080;
+	settings.port = 9021;
 	settings.bindAddresses = ["::1", "127.0.0.1"];
 	listenHTTP(settings, router);
 }
