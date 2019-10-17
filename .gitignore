@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/uploader-vibed
+uploader-vibed.so
+uploader-vibed.dylib
+uploader-vibed.dll
+uploader-vibed.a
+uploader-vibed.lib
+uploader-vibed-test-*
+*.exe
+*.o
+*.obj
+*.lst
+
+/uploads

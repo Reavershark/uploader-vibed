@@ -1,0 +1,14 @@
+{
+	"authors": [
+		"jonas"
+	],
+	"copyright": "Copyright © 2019, jonas",
+	"dependencies": {
+		"vibe-d:http": "~>0.8.2",
+		"vibe-d:mongodb": "~>0.8.2"
+	},
+	"description": "A simple vibe.d server application.",
+	"license": "proprietary",
+	"name": "uploader-vibed",
+	"versions": ["VibeDefaultMain"]
+}
